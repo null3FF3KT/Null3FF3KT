@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>null3FF3KT AI</title>
+    <style>
+        body {
+            background-color: #2C3E50;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #FFF;
+        }
+		
+		.page-container {
+			position: relative; /* Add this line to ensure the blank areas are positioned relative to the page container */
+			min-height: 100vh; /* Ensure the container takes up the full viewport height */
+		}
+
+		.content-container {
+			flex: 3; /* The content container will take up three times the available space compared to the blank area */
+			background-color: #2C3E50; /* Your background color */
+			/* Add any other styles for the content container */
+		}
+
+		.blank-area-left {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 10%;
+			height: 100vh;
+			background-color: #ffffff; /* Set the background color to white */
+		}
+
+		.blank-area-right {
+			position: fixed;
+			top: 0;
+			right: 0;
+			width: 25%;
+			height: 100vh;
+			background-color: #ffffff; /* Set the background color to white */
+		}
+				
+		.main-content {
+            display: flex;
+			flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+		
+		.profile {
+			display: flex;
+			flex-direction: row;
+		}
+        .profile-card {
+            background-color: #34495E;
+            padding: 1rem;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-card img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+		
+		.profile-section {
+            text-align: justify;
+            margin-top: 2rem;
+			margin-left: 2.5rem;
+            max-width: 600px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #1ABC9C;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+		
+		.tech-tools {
+            font-family: 'Orbitron', sans-serif;
+            list-style-type: disc;
+            padding-left: 5rem;
+            text-align: justify;
+        }
+		li {
+			padding: .25rem;
+		}
+		
+		.text-generation-card {
+            background-color: #34495E;
+            padding: 2rem;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .text-generation-card img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 1rem;
+        }
+
+        footer {
+            background-color: white;
+            color: #2C3E50;
+            padding: 1rem;
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+		#game-board {
+			display: grid;
+			grid-template-columns: repeat(3, 100px);
+			grid-template-rows: repeat(3, 100px);
+			grid-gap: 5px;
+			margin-top: 1rem;
+		}
+
+		.cell {
+			width: 100px;
+			height: 100px;
+			background-color: #FFF;
+			color: #2C3E50;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 2rem;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		
+    </style>
+	<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", () => {
+		const cells = document.querySelectorAll(".cell");
+		const statusMessage = document.getElementById("status-message");
+		const board = ["", "", "", "", "", "", "", "", ""];
+		let currentPlayer = "X";
+		let gameOver = false;
+
+		function initGame() {
+			cells.forEach(cell => cell.addEventListener("click", handleClick));
+			resetGame();
+		}
+
+		function checkWinner(player) {
+			const winningPositions = [
+				[0, 1, 2],
+				[3, 4, 5],
+				[6, 7, 8],
+				[0, 3, 6],
+				[1, 4, 7],
+				[2, 5, 8],
+				[0, 4, 8],
+				[2, 4, 6],
+			];
+
+			return winningPositions.some(positions =>
+				positions.every(position => board[position] === player)
+			);
+		}
+
+		function checkTie() {
+			return board.every(cell => cell !== "");
+		}
+		
+		function handleClick(event) {
+			if (gameOver) {
+				resetGame();
+				return;
+			}
+			
+			const index = parseInt(event.target.dataset.index);
+
+			if (board[index] === "") {
+				board[index] = currentPlayer;
+				event.target.textContent = currentPlayer;
+
+				if (checkWinner(currentPlayer)) {
+					statusMessage.textContent = `Player ${currentPlayer} wins!`;
+					gameOver = true;
+				} else if (checkTie()) {
+					statusMessage.textContent = "It's a tie!";
+					gameOver = true;
+				} else {
+					currentPlayer = currentPlayer === "X" ? "O" : "X";
+					statusMessage.textContent = `Player ${currentPlayer}'s turn`;
+				}
+			}
+		}
+		
+		function resetGame() {
+			board.fill("");
+			cells.forEach(cell => (cell.textContent = ""));
+			currentPlayer = "X";
+			statusMessage.textContent = `Player ${currentPlayer}'s turn`;
+			gameOver = false;
+		}
+	
+		initGame();
+	});
+	</script>
+
+</head>
+<body>
+	<div class="page-container">
+		<div class="blank-area-left"></div>
+		<div class="content-container">
+			<div class="main-content">
+				<div class="profile">
+					<div class="profile-card">
+						<img src="me3.png" alt="Profile Image">
+						<p>github:</p>
+						<h1><a href="https://github.com/null3FF3KT" target="_blank">null3FF3KT</a></h1>
+					</div>
+					<div class="profile-section">
+						<p>
+							I am currently implementing various AI models to accomplish tasks and produce value for my clients.
+							This is achieved using a variety of tech tools:
+						</p>
+						<!-- Add the Tech Tools list -->
+						<h2 class="tech-tools">Tech Tools</h2>
+						<ul class="tech-tools">
+							<li>Python</li>
+							<li>ML models</li>
+							<li>Node</li>
+							<li>Angular</li>
+							<li>Typescript</li>
+							<li>C#</li>
+							<li>SQL</li>
+							<li>Azure Services</li>
+							<li>AWS Services</li>
+						</ul>
+					</div>
+				</div>
+				<div class="text-generation-card">
+					<h2>Text Generation</h2>
+					<img src="textgen.jpg" alt="Text Generation Image">
+				</div>
+				<div class="game-card">
+					<h2>Tic-Tac-Toe</h2>
+					<div id="game-board">
+						<div class="cell" data-index="0"></div>
+						<div class="cell" data-index="1"></div>
+						<div class="cell" data-index="2"></div>
+						<div class="cell" data-index="3"></div>
+						<div class="cell" data-index="4"></div>
+						<div class="cell" data-index="5"></div>
+						<div class="cell" data-index="6"></div>
+						<div class="cell" data-index="7"></div>
+						<div class="cell" data-index="8"></div>
+					</div>
+					<p id="status-message"></p>
+				</div>
+			</div>
+		
+		<!-- Add the footer -->
+		<footer>
+			&copy; 2023. All rights reserved. Page created using ChatGPT.
+		</footer>
+	</div>
+    <div class="blank-area-right"></div>
+	</div>
+    
+</body>
+</html>
